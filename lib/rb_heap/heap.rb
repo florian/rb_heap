@@ -43,6 +43,7 @@ class Heap
   def add(element)
     @heap << element
     rebalance_up(size)
+    self
   end
 
   alias :<< :add
@@ -56,7 +57,7 @@ class Heap
     i = 1
 
     while i <= size
-      result << @heap[i, i]
+      result << @heap[i, i].to_s
       i *= 2
     end
 
