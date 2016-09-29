@@ -1,18 +1,7 @@
 class Heap
   def initialize(compare_symbol = :<, &compare_fn)
-    init_heap
-
-    if not compare_fn and not [:<, :>].include?(compare_symbol)
-      raise ArgumentError.new("The comparison symbol needs to be either :> or :<")
-    end
-
-    @compare_symbol = compare_symbol
-
-    @compare_fn = if block_given?
-      compare_fn
-    else
-      nil
-    end
+    initialize_heap
+    initialize_compare(compare_symbol, &compare_fn)
   end
 
   def size
@@ -48,8 +37,23 @@ class Heap
 
   alias :<< :add
 
+  def replace(element)
+    @heap[1] = element
+    rebalance_down(1)
+  end
+
+  def offer(element)
+    if compare(element, peak)
+      result = peak
+      replace(element)
+      result
+    else
+      element
+    end
+  end
+
   def clear
-    init_heap
+    initialize_heap
   end
 
   def to_s
@@ -70,18 +74,24 @@ class Heap
 
   private
 
-  def init_heap
+  def initialize_heap
     @heap = [nil]
   end
 
-  def compare(a,b)
-    if @compare_fn
-      @compare_fn.call(a, b)
-    elsif @compare_symbol == :<
-      a < b
-    elsif @compare_symbol == :>
-      a > b
+  def initialize_compare(symbol, &fn)
+    @compare = if block_given?
+      compare_fn
+    elsif symbol == :< or symbol.nil?
+      lambda{|a, b| a < b}
+    elsif symbol == :>
+      lambda{|a, b| a > b}
+    else
+      raise ArgumentError.new("The comparison symbol needs to be either :> or :<")
     end
+  end
+
+  def compare(a, b)
+    @compare.call(a, b)
   end
 
   def rebalance_up(i)
