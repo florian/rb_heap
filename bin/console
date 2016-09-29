@@ -10,5 +10,7 @@ require "rb_heap"
 # require "pry"
 # Pry.start
 
+$a = Heap.new
+
 require "irb"
 IRB.start
