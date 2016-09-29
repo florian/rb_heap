@@ -5,7 +5,7 @@ class Heap
   end
 
   def size
-    @heap.size - 1
+    @heap.size
   end
 
   def empty?
@@ -13,15 +13,15 @@ class Heap
   end
 
   def peak
-    @heap[1]
+    @heap[0]
   end
 
   def pop
     result = peak
 
     if size > 1
-      @heap[1] = @heap.pop
-      rebalance_down(1)
+      @heap[0] = @heap.pop
+      rebalance_down(0)
     else
       clear
     end
@@ -31,19 +31,19 @@ class Heap
 
   def add(element)
     @heap << element
-    rebalance_up(size)
+    rebalance_up(size - 1)
     self
   end
 
   alias :<< :add
 
   def replace(element)
-    @heap[1] = element
-    rebalance_down(1)
+    @heap[0] = element
+    rebalance_down(0)
   end
 
   def offer(element)
-    if compare(element, peak)
+    if compare(peak, element)
       result = peak
       replace(element)
       result
@@ -56,31 +56,19 @@ class Heap
     initialize_heap
   end
 
-  def to_s
-    result = ""
-    i = 1
-
-    while i <= size
-      result << @heap[i, i].to_s
-      i *= 2
-    end
-
-    result
-  end
-
   def to_a
-    @heap[1..-1]
+    @heap.dup
   end
 
   private
 
   def initialize_heap
-    @heap = [nil]
+    @heap = []
   end
 
   def initialize_compare(symbol, &fn)
     @compare = if block_given?
-      compare_fn
+      fn
     elsif symbol == :< or symbol.nil?
       lambda{|a, b| a < b}
     elsif symbol == :>
@@ -117,26 +105,26 @@ class Heap
   end
 
   def has_parent(i)
-    i >= 2
+    i >= 1
   end
 
   def parent(i)
-    (i / 2).floor
+    ((i - 1) / 2).floor
   end
 
   def has_left(i)
-    left(i) <= size
+    left(i) < size
   end
 
   def left(i)
-    i * 2
+    i * 2 + 1
   end
 
   def has_right(i)
-    right(i) <= size
+    right(i) < size
   end
 
   def right(i)
-    i * 2 + 1
+    i * 2 + 2
   end
 end
