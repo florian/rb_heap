@@ -1,12 +1,11 @@
 class Heap
-  def initialize(compare_symbol = :<, &compare_fn)
-    initialize_heap
+  def initialize(compare_symbol = :<, storage = [], &compare_fn)
+    @heap = storage
+    @size = 0
     initialize_compare(compare_symbol, &compare_fn)
   end
 
-  def size
-    @heap.size
-  end
+  attr_reader :size
 
   def empty?
     size == 0
@@ -20,17 +19,21 @@ class Heap
     result = peak
 
     if size > 1
-      @heap[0] = @heap.pop
+      @size -= 1
+      @heap[0] = @heap[@size]
       rebalance_down(0)
     else
-      clear
+      @size = 0
     end
+
+    @heap[@size] = nil
 
     result
   end
 
   def add(element)
-    @heap << element
+    @heap[@size] = element
+    @size += 1
     rebalance_up(size - 1)
     self
   end
@@ -53,7 +56,8 @@ class Heap
   end
 
   def clear
-    initialize_heap
+    @heap = []
+    @size = 0
   end
 
   def to_a
@@ -61,10 +65,6 @@ class Heap
   end
 
   private
-
-  def initialize_heap
-    @heap = []
-  end
 
   def initialize_compare(symbol, &fn)
     @compare = if block_given?
