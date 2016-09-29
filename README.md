@@ -24,3 +24,11 @@ reason this library also comes with a heapsort function.
 ```rb
 Heap.sort([3,1,2]) # => [1, 2, 3]
 ```
+
+## Future ideas
+
+Ideas for functions that could be added:
+
+- Create a heap from an array. This is possible in O(n). Right now one could
+  repeatly add all the array elements into a new heap, but that'd be O(n log n)
+- Merging two heaps
