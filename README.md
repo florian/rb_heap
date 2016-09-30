@@ -40,6 +40,22 @@ minAbsHeap.pop # => -2
 minAbsHeap.pop # => 3
 ```
 
+You can use this comparison function to compare specific fields:
+
+```rb
+Person = Struct.new(:name, :age)
+
+ageHeap = Heap.new{|a, b| a.age < b.age}
+ageHeap << Person.new("Richard Hendricks", 26)
+ageHeap << Person.new("Erlich Bachman", 32)
+ageHeap << Person.new("Dinesh Chugtai", 30)
+
+ageHeap.pop.name # => Richard Hendricks
+ageHeap.pop.name # => Dinesh Chugtai
+ageHeap.pop.name # => Erlich Bachman
+
+```
+
 ## `pop` (O(log n)) and `peak` (O(1))
 
 `pop` removes the top element of the heap and returns it. `peak` returns the top
