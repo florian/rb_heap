@@ -9,9 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Florian Hartmann"]
   spec.email         = ["jscoderr@gmail.com"]
 
-  spec.summary       = %q{Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
-  spec.homepage      = "http://github.com"
+  spec.summary       = %q{Light-weight priority queue implementation using a heap}
+  spec.homepage      = "https://github.com/florian/rb_heap"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
