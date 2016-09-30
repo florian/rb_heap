@@ -115,12 +115,12 @@ Returns the amount of elements that are in the heap.
 
 ### `empty?`
 
-Returns a boolean that indicates whether the heap has an elements.
+Returns a boolean that indicates whether the heap has any elements.
 
 ### `to_a`
 
 Gives you all the heap contents as an array, but you shouldn't make any assumptions about
-the order of them.
+the order of the elements.
 
 ## Sorting
 
