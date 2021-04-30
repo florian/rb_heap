@@ -182,6 +182,15 @@ describe Heap do
       expect(@a.to_a.sort).to eq([1,2,3,4,5,6])
     end
 
+    it "does not include nils from popping" do
+      @a << 2 << 1 << 3 << 4 << 6 << 5
+      @a.pop
+      @a.pop
+      @a << 20
+      # We have to sort because we can't make assumptions about the order
+      expect(@a.to_a.sort).to eq([3,4,5,6,20])
+    end
+
     it "contains no meta elements" do
       expect(@a.to_a).to eq([])
     end

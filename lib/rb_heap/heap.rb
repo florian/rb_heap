@@ -61,7 +61,7 @@ class Heap
   end
 
   def to_a
-    @heap.dup
+    @heap.reject{|element| element.nil? }
   end
 
   private
